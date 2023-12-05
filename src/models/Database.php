@@ -1,8 +1,8 @@
-L<?php
+<?php
 class Database {
     private $pdo;
 
-    public function __construct($host = 'localhost:8081', $dbname = 'anyplace', $username = 'root', $password = 'root') {
+    public function __construct($host = 'mysql', $dbname = 'anyplace', $username = 'root', $password = 'root') {
         // Conectar ao banco de dados usando PDO
         try {
             $this->pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
@@ -10,6 +10,11 @@ class Database {
         } catch (PDOException $e) {
             die("Erro na conexão com o banco de dados: " . $e->getMessage());
         }
+    }
+
+    public function query($sql){
+        $consulta = $this->pdo->prepare($sql);
+        $consulta->execute();
     }
 
     public function beginTransaction() {

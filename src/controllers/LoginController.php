@@ -5,7 +5,8 @@ class LoginController extends RenderView
         $this->loadView('login');
     }
 
-    public function logar($core->getRequest('usuario')){
+    public function logar(){
         
+        print_r($this->getRequest('usuario'));
     }
 }

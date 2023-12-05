@@ -34,8 +34,4 @@ class Core
                 $controller->index();
         }
     }
-
-    public function getRequest($var){
-        return isset($_REQUEST[$var]) ? $_REQUEST[$var] : '';
-    }
 }
