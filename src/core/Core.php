@@ -6,7 +6,12 @@ class Core
         $url = '/';
 
         isset($_GET['url']) ? $url .= $_GET['url'] : '';
-
+        if (session_status()==PHP_SESSION_ACTIVE)
+        print_r($_SESSION);
+        else
+        echo 'bosta';
+        $_SESSION = array();session_destroy(); exit;
+        $url = '/login';
         ($url != '/') ? $url = rtrim($url, '/') : $url;
 
         $routerFound = false;

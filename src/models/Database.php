@@ -1,35 +1,13 @@
 <?php
 class Database {
-    private $pdo;
-
-    public function __construct($host = 'mysql', $dbname = 'anyplace', $username = 'root', $password = 'root') {
-        // Conectar ao banco de dados usando PDO
+    public static function getConnection()
+    {
         try {
-            $this->pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
-            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch (PDOException $e) {
-            die("Erro na conexão com o banco de dados: " . $e->getMessage());
+        $pdo = new PDO("mysql:dbname=anyplace;host=mysql",'root','root');
+        return $pdo;
+        } catch (PDOException $err) {
+        echo "Sorry, something went wrong, verify database";
+        exit();
         }
     }
-
-    public function query($sql){
-        $consulta = $this->pdo->prepare($sql);
-        $consulta->execute();
-    }
-
-    public function beginTransaction() {
-        // Inicia a transação
-        $this->pdo->beginTransaction();
-    }
-
-    public function commit() {
-        // Confirma a transação
-        $this->pdo->commit();
-    }
-
-    public function rollBack() {
-        // Desfaz a transação em caso de erro
-        $this->pdo->rollBack();
-    }
-
 }
