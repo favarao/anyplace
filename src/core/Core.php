@@ -6,19 +6,17 @@ class Core
         $url = '/';
 
         isset($_GET['url']) ? $url .= $_GET['url'] : '';
-        if (session_status()==PHP_SESSION_ACTIVE)
-        print_r($_SESSION);
-        else
-        echo 'bosta';
-        $_SESSION = array();session_destroy(); exit;
-        $url = '/login';
+        if (isset($_SESSION['idUsuario']) && $url=='/login')
+            $url = '/';
+        if(!isset($_SESSION['idUsuario']) && $url!='/logar')
+            $url = '/login';
         ($url != '/') ? $url = rtrim($url, '/') : $url;
 
         $routerFound = false;
 
         foreach ($routes as $path => $controller) {
             $pattern = '#^' . preg_replace('/{id}/', '([\w-]+|\d+)', $path) . '$#';
-
+            echo $pattern;
             if (preg_match($pattern, $url, $matches)) {
                 array_shift($matches);
                 $routerFound = true;

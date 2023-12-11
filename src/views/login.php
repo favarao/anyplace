@@ -20,6 +20,9 @@ require_once __DIR__ . '/head.php';
                             <input type="password" class="form-control" name="senha" id="senha"
                                 placeholder="Digite sua senha">
                         </div>
+                        <div class="my-2">
+                            <span class="msg-erro" style="color:red; font-weight:bold; display:none;">Usuário ou senha inválida.</span>
+                        </div>
                         <button type="button" onclick="logar()" class="btn btn-primary mt-2">Entrar</button>
                     </form>
                 </div>
@@ -29,13 +32,17 @@ require_once __DIR__ . '/head.php';
 </div>
 
 <script>
+    $("input").keydown(function(e){
+        if(e.which===13)
+            logar();
+    })
     function logar() {
         $.post("logar", $("#form-login").serialize(), function (resultado) {
             if(resultado == true)
-                console.log("verda");
+            window.location.href='/';
             else
-                console.log("falso");
-            console.log(resultado);
+                $(".msg-erro").show();
+
         });
     }
 

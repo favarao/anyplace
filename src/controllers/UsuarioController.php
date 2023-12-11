@@ -8,5 +8,6 @@ class UsuarioController
 
     public function show($id)
     {
+        print_r($id);
     }
 }

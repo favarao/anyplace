@@ -5,5 +5,6 @@ $routes = [
     '/usuarios' => 'UsuarioController@usuarios',
     '/login' => 'LoginController@index',
     '/logar' => 'LoginController@logar',
-    '/logout' => 'LoginController@logout'
+    '/logout' => 'LoginController@logout',
+    '/clientes' => 'ClienteController@index'
 ];
