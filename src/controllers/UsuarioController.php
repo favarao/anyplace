@@ -16,6 +16,9 @@ class UsuarioController
         $senha = $_REQUEST['novaSenha'];
         $senha2 = $_REQUEST['novaSenha2'];
         $idUsuario = $_SESSION['idUsuario'];
-        echo json_encode(Usuario::novaSenha($idUsuario,$senha,$senha2));
+        $result = Usuario::novaSenha($idUsuario,$senha,$senha2);
+        if($result['success'] == true)
+            unset($_SESSION['alterar']);
+        echo json_encode($result);
     }
 }

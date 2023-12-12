@@ -54,7 +54,8 @@
             function enviar() {
                 $.post('/alterarSenhaInicial', $("#form-changepass").serialize(), function (data) {
                     $(".msg-erro").html(data.msg);
-                    console.log(data);
+                    if(data.success == true)
+                        location.reload(true);
                 })
             }
         </script>

@@ -10,15 +10,15 @@
                                 Clientes <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>                                
                             </a>
                             <div class="collapse link-group" id="collapseClientes" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                                    <a class="nav-link" href="login">Clientes</a>
-                                    <a class="nav-link" href="cliente-adicionar.php">Cliente Adicionar</a>
+                                    <a class="nav-link" href="/clientes">Clientes</a>
+                                    <a class="nav-link" href="/addcliente">Cliente Adicionar</a>
                             </div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseProdutos" aria-expanded="false" aria-controls="collapsePages">
                                 Produtos <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse link-group" id="collapseProdutos" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
-                                <a class="nav-link no-border" href="produtos.php">Produtos</a>
-                                <a class="nav-link" href="produto-adicionar.php">Produto Adicionar</a>
+                                <a class="nav-link no-border" href="/produtos">Produtos</a>
+                                <a class="nav-link" href="/addprodutos">Produto Adicionar</a>
                             </div>
 
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseVendas" aria-expanded="false" aria-controls="collapsePages">

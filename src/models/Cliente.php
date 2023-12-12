@@ -6,7 +6,11 @@ class Cliente extends Database{
         try{
         $pdo = self::getConnection();
         $stm = $pdo->query("SELECT p.* FROM pessoa p WHERE p.status!=999");
-        return $stm->fetchObject('Cliente');
+        // $clientes = array();
+        // while($row = $stm->fetchObject('Cliente'))
+        //     $clientes[] = $row;
+        // return $clientes;
+        return $stm->fetchAll(PDO::FETCH_CLASS,'Cliente');
         }catch(PDOException $e){
             throw new Exception(print_r($e->errorInfo));
         }
