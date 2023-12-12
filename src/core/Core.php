@@ -16,7 +16,6 @@ class Core
 
         foreach ($routes as $path => $controller) {
             $pattern = '#^' . preg_replace('/{id}/', '([\w-]+|\d+)', $path) . '$#';
-            echo $pattern;
             if (preg_match($pattern, $url, $matches)) {
                 array_shift($matches);
                 $routerFound = true;
@@ -27,7 +26,9 @@ class Core
                 require_once __DIR__ . "/../controllers/$currentController.php";
 
                 $newController = new $currentController();
-                $newController->$action($matches);
+                $newController->$action(
+                    
+                );
             }
         }
 
@@ -37,4 +38,9 @@ class Core
                 $controller->index();
         }
     }
+}
+
+function allow($grupos){
+    $grupos = explode(',',$grupos);
+    return in_array($_SESSION['idGrupo'],$grupos);
 }

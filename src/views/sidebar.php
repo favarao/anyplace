@@ -52,6 +52,13 @@
                                 <a class="nav-link no-border" href="relatorio-contas-receber.php">Contas a Receber</a>
                                 <a class="nav-link" href="index.php">Home</a>
                             </div>
+
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseConfiguracoes" aria-expanded="false" aria-controls="collapsePages">
+                                Configurações <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse link-group" id="collapseConfiguracoes" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                                <a class="nav-link no-border" href="/parametrizacao">Parametrização</a>
+                            </div>
                         </div>
                     </div>
                 </nav>

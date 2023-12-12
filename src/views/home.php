@@ -3,25 +3,27 @@
 <section>
     <main>
         <div class="container-fluid p-3">
-            
+
             <div class="card">
                 <div class="card-body">
-                    <?php if ($_SESSION['alterar']): ?>
+                    <?php if (isset($_SESSION['alterar'])): ?>
                         <div class="row">
-                <h1>Alterar senha inicial</h1>
-            </div>
-                        <form action="changepass" method="POST">
+                            <h1>Alterar senha inicial</h1>
+                        </div>
+                        <form id="form-changepass">
                             <div class="row">
                                 <div class="col-md-6 p-3">
                                     <div class="form-group">
                                         <label for="">Nova senha*</label>
-                                        <input type="password" class="form-control" placeholder="Nome do Cliente">
+                                        <input type="password" name="novaSenha" class="form-control"
+                                            placeholder="Nova senha">
                                     </div>
                                 </div>
                                 <div class="col-md-6 p-3">
                                     <div class="form-group">
                                         <label for="">Repetir senha *</label>
-                                        <input type="password" class="form-control" placeholder="Nome da Loja">
+                                        <input type="password" name="novaSenha2" class="form-control"
+                                            placeholder="Nova senha">
                                     </div>
                                 </div>
                             </div>
@@ -33,25 +35,28 @@
                                 <div><span class="campo-obrigatorio">* campos obrigatórios</span></div>
 
                                 <div>
-                                    <a href="" class="btn btn-primary botao">Cancelar</a>
-                                    <a href="" class="btn btn-primary botao">Salvar</a>
+                                    <button class="btn btn-primary botao" type="button" onclick="enviar()">Salvar</button>
                                 </div>
 
                             </div>
                         </form>
                     <?php else: ?>
                         <div class="text-center">
-                            <p class="bem-vindo">Bem Vindo</p>
+                            <p style="font-size:50px;" class="bem-vindo"><?=$param->nomeSistema??''?></p>
                         </div>
                     <?php endif; ?>
-                    <div class="text-center">
-                            <p style="font-size:50px;" class="bem-vindo">AnyPlace</p>
-                        </div>2
+
 
                 </div>
             </div>
         </div>
         <script>
+            function enviar() {
+                $.post('/alterarSenhaInicial', $("#form-changepass").serialize(), function (data) {
+                    $(".msg-erro").html(data.msg);
+                    console.log(data);
+                })
+            }
         </script>
     </main>
 </section>

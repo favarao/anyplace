@@ -11349,3 +11349,8 @@ span.campo-obrigatorio {
   padding: 20px;
   border-radius: 10px;
 }
+
+.msg-erro{
+  color:red;
+  font-weight:bold;
+}
