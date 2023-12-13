@@ -3,6 +3,9 @@
 class HomeController extends RenderView{
     public function index(){
         $this->loadView('home',
-        ['title' => 'Home Page']);
+        [
+            'title' => 'Home Page',
+            'param' => Configuracao::getConfiguracao()
+        ]);
     }
 }

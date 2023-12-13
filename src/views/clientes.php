@@ -9,7 +9,7 @@
                     <a href="cliente-adicionar.php" class="btn btn-primary">Adicionar</a>
                 </div>
             <div class="card-body">
-                
+                <?php if(!empty($clientes)):?>
                 <div class="table-responsive">
                     <table id="tabela-clientes">
                         <thead>
@@ -23,10 +23,10 @@
                         </thead>
                         <tbody>
                             <?php if($clientes)
-                            foreach($clientes as $clientes): ?>
+                            foreach($clientes as $cliente): ?>
                             <tr>
-                                <td>João</td>
-                                <td>KABUM</td>
+                                <td><?=$cliente->nome?></td>
+                                <td><?=$cliente->loja?></td>
                                 <td>(18)99999-9999</td>
                                 <td>joao@kabum.com.br</td>
                                 <td class="actions">
@@ -35,120 +35,14 @@
                                 </td>   
                             </tr>
                             <?php endforeach;?>
-                            <tr>
-                                <td>Maria</td>
-                                <td>KALUNGA</td>
-                                <td>(18)99999-9999</td>
-                                <td>maria@kalunga.com.br</td>
-                                <td class="actions">
-                                    <a href="" class="table-link"><i class="fa-solid fa-pencil"></i></a>
-                                    <a href="" class="table-link text-danger"><i class="fa-solid fa-trash"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Pedro</td>
-                                <td>TORRA</td>
-                                <td>(18)99999-9999</td>
-                                <td>pedro@torra.com.br</td>
-                                <td class="actions">
-                                    <a href="" class="table-link"><i class="fa-solid fa-pencil"></i></a>
-                                    <a href="" class="table-link text-danger"><i class="fa-solid fa-trash"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Bruna</td>
-                                <td>MAGALU</td>
-                                <td>(18)99999-9999</td>
-                                <td>bruna@magalu.com.br</td>
-                                <td class="actions">
-                                    <a href="" class="table-link"><i class="fa-solid fa-pencil"></i></a>
-                                    <a href="" class="table-link text-danger"><i class="fa-solid fa-trash"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>João</td>
-                                <td>KABUM</td>
-                                <td>(18)99999-9999</td>
-                                <td>joao@kabum.com.br</td>
-                                <td class="actions">
-                                    <a href="" class="table-link"><i class="fa-solid fa-pencil"></i></a>
-                                    <a href="" class="table-link text-danger"><i class="fa-solid fa-trash"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Maria</td>
-                                <td>KALUNGA</td>
-                                <td>(18)99999-9999</td>
-                                <td>maria@kalunga.com.br</td>
-                                <td class="actions">
-                                    <a href="" class="table-link"><i class="fa-solid fa-pencil"></i></a>
-                                    <a href="" class="table-link text-danger"><i class="fa-solid fa-trash"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Pedro</td>
-                                <td>TORRA</td>
-                                <td>(18)99999-9999</td>
-                                <td>pedro@torra.com.br</td>
-                                <td class="actions">
-                                    <a href="" class="table-link"><i class="fa-solid fa-pencil"></i></a>
-                                    <a href="" class="table-link text-danger"><i class="fa-solid fa-trash"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Gabrielle</td>
-                                <td>MAGALU</td>
-                                <td>(18)99999-9999</td>
-                                <td>bruna@magalu.com.br</td>
-                                <td class="actions">
-                                    <a href="" class="table-link"><i class="fa-solid fa-pencil"></i></a>
-                                    <a href="" class="table-link text-danger"><i class="fa-solid fa-trash"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>João</td>
-                                <td>KABUM</td>
-                                <td>(18)99999-9999</td>
-                                <td>joao@kabum.com.br</td>
-                                <td class="actions">
-                                    <a href="" class="table-link"><i class="fa-solid fa-pencil"></i></a>
-                                    <a href="" class="table-link text-danger"><i class="fa-solid fa-trash"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Maria</td>
-                                <td>KALUNGA</td>
-                                <td>(18)99999-9999</td>
-                                <td>maria@kalunga.com.br</td>
-                                <td class="actions">
-                                    <a href="" class="table-link"><i class="fa-solid fa-pencil"></i></a>
-                                    <a href="" class="table-link text-danger"><i class="fa-solid fa-trash"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Pedro</td>
-                                <td>TORRA</td>
-                                <td>(18)99999-9999</td>
-                                <td>pedro@torra.com.br</td>
-                                <td class="actions">
-                                    <a href="" class="table-link"><i class="fa-solid fa-pencil"></i></a>
-                                    <a href="" class="table-link text-danger"><i class="fa-solid fa-trash"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Bruna</td>
-                                <td>MAGALU</td>
-                                <td>(18)99999-9999</td>
-                                <td>bruna@magalu.com.br</td>
-                                <td class="actions">
-                                    <a href="" class="table-link"><i class="fa-solid fa-pencil"></i></a>
-                                    <a href="" class="table-link text-danger"><i class="fa-solid fa-trash"></i></a>
-                                </td>
-                            </tr>
+                            
                         </tbody>
 
                     </table>
                 </div>
+                <?php else:?>
+                    <span>Nenhum cliente cadastrado.</span>
+                <?php endif;?>
             </div>
         </div>
     </div>

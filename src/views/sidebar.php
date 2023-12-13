@@ -57,7 +57,7 @@
                                 Configurações <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse link-group" id="collapseConfiguracoes" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
-                                <a class="nav-link no-border" href="/parametrizacao">Parametrização</a>
+                                <a class="nav-link no-border" href="/configuracao">Parametrização</a>
                             </div>
                         </div>
                     </div>
