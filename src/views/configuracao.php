@@ -6,7 +6,7 @@
         </div>
         <div class="card">
             <div class="card-body">
-                <form method="POST" id="formulario" action="/">
+                <form method="POST" enctype="multipart/form-data" id="formulario" action="/attParam">
                 <input type="hidden" name="id" value="1">
                 <div class="row">
                     <div class="col-md-6 p-3">
@@ -27,14 +27,16 @@
                         <div class="form-group">
                             <label for="">Logo *</label>
                             <input type="file" name="logo" id="logo" class="form-control" value="<?=$param->logo?>">
-                            <div class="imagem-atual">
+                            <div class="imagem-atual d-flex align-items-center justify-content-center mt-3">
                                 <?php if(isset($param->logo) && $param->logo!=''): ?>
-                                    <img src="assets/img/<?=$param->logo??''?>" alt="">
+                                    <img style="width:200px;" src="assets/img/<?=$param->logo??''?>" alt="">
                                 <?php endif;?>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <div class="msg-erro"><?=$msg??''?></div>
                
                 
                 <div class="row botoes-formulario">
@@ -50,13 +52,16 @@
         </div>
     </div>
     <script>
-        $("#formulario").submit(function(e){
-            e.preventDefault();
-            $.post('/insertCliente',$("#formulario").serialize(),function(data){
-                console.log(data);
-            });
+        $(".imagem-atual").change(function(){
+            $(this).html('');
+        });
+        // $("#formulario").submit(function(e){
+        //     e.preventDefault();
+        //     $.post('/insertCliente',$("#formulario").serialize(),function(data){
+        //         console.log(data);
+        //     });
             
-        })
+        // })
     </script>
 </main>
 <?php include_once('footer.php'); ?>

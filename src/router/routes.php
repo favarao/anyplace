@@ -14,4 +14,5 @@ $routes = [
     '/updateCliente' => 'ClienteController@atualizarCliente',
     '/deleteCliente/{id}' => 'ClienteController@deletarCliente',
     '/configuracao' => 'ConfiguracaoController@index',
+    '/attParam' => 'ConfiguracaoController@atualizarParametro'
 ];

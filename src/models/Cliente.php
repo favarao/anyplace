@@ -9,6 +9,7 @@ class Cliente extends Database{
     public $celular;
     public $contato;
     public $endereco;
+    public $login;
     public $status;
 
 
@@ -23,13 +24,14 @@ class Cliente extends Database{
         $this->celular = $data["celular"]??'';
         $this->contato = $data["contato"]??'';
         $this->endereco = $data["endereco"]??'';
+        $this->login = $data["login"]??'';
         $this->status = $data["status"]??1;
     }
 
     public static function getClientes(){
         try{
         $pdo = self::getConnection();
-        $stm = $pdo->query("SELECT p.* FROM pessoa p WHERE p.status!=999");
+        $stm = $pdo->query("SELECT p.*, u.login FROM pessoa p left join usuario u on u.idCliente = p.id WHERE p.status!=999");
         $clientes = array();
         while($row = $stm->fetch(PDO::FETCH_ASSOC)){
             $clientes[] = new Cliente($row);
@@ -43,8 +45,10 @@ class Cliente extends Database{
     public static function getCliente($id){
         try{
             $pdo = self::getConnection();
-            $stm = $pdo->query("SELECT * FROM pessoa where id = '$id'");
+            $stm = $pdo->query("SELECT p.*, u.login FROM pessoa p left join usuario u on u.idCliente = p.id where p.id = '$id'");
+            if($stm)
             return new Cliente($stm->fetch(PDO::FETCH_ASSOC));
+            return false;
         }catch(PDOException $e){
             throw new Exception(print_r($e->errorInfo));
         }
@@ -72,7 +76,7 @@ class Cliente extends Database{
                 '$this->status'
                 )");
             if($stm)
-                return true;
+                return $pdo->lastInsertId();
             return false;
         }catch(PDOException $e){
             throw new Exception(print_r($e->errorInfo));
@@ -80,7 +84,6 @@ class Cliente extends Database{
     }
     public function update(){
         try{
-            print_r($this);
             $pdo = self::getConnection();
             $stm = $pdo->query("UPDATE pessoa SET
             nome = '$this->nome',

@@ -184,9 +184,10 @@
                 $("#id").val(data.id);
                 $("#nome").val(data.nome);
                 $("#loja").val(data.loja);
-                $("#cnpj").val(data.cnpj);
-                $("#celular").val(data.celular);
-                $("#telefone").val(data.telefone);
+                $("#email").val(data.email);
+                $("#cnpj").val(data.cnpj).trigger('input');
+                $("#celular").val(data.celular).trigger('input');
+                $("#telefone").val(data.telefone).trigger('input');
                 $("#endereco").val(data.endereco);
                 $("#status").val(data.status);
                 $("#contato").val(data.contato);

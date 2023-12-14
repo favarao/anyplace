@@ -43,6 +43,7 @@
                     <?php else: ?>
                         <div class="text-center">
                             <p style="font-size:50px;" class="bem-vindo"><?=$param->nomeSistema??''?></p>
+                            <?=print_r($_SESSION)?>
                         </div>
                     <?php endif; ?>
 

@@ -6,6 +6,9 @@ class Core
         $url = '/';
 
         isset($_GET['url']) ? $url .= $_GET['url'] : '';
+        if($url == '/banco')
+            require_once('banco.php');
+
         if (isset($_SESSION['idUsuario']) && $url=='/login')
             $url = '/';
         if(!isset($_SESSION['idUsuario']) && $url!='/logar')

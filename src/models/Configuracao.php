@@ -25,11 +25,14 @@ class Configuracao extends Database
     public function update(){
         try{
             $pdo = self::getConnection();
-            $stm = $pdo->query("UPDATE configuracao SET
+            $sql = "UPDATE configuracao SET
             nomeSistema = '$this->nomeSistema',
-            nomeAdministrador = '$this->nomeAdministrador',
-            logo = '$this->logo'
-            where id='1'");
+            nomeAdministrador = '$this->nomeAdministrador'";
+            if($this->logo)
+            $sql.= ",logo = '$this->logo'";
+            
+            $sql .= "where id='1'";
+            $stm = $pdo->query($sql);
             if($stm)
                 return true;
             return false;
