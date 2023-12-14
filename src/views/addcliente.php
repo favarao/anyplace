@@ -73,7 +73,7 @@
                 <div class="col-md-6 p-3">
                         <div class="form-group">
                             <label for="">Nome de contato *</label>
-                            <input type="text" class="form-control" placeholder="Nome - Cargo" required>
+                            <input type="text" name="contato" id="contato" class="form-control" placeholder="Nome - Cargo" required>
                         </div>
                     </div>
                     <div class="col-md-6 p-3">
@@ -97,6 +97,7 @@
             </div>
         </div>
     </div>
+
     <script>
         $("#formulario").submit(function(e){
             e.preventDefault();

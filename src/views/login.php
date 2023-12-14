@@ -21,7 +21,7 @@ require_once __DIR__ . '/head.php';
                                 placeholder="Digite sua senha">
                         </div>
                         <div class="my-2">
-                            <span class="msg-erro" style="color:red; font-weight:bold; display:none;">Usuário ou senha inválida.</span>
+                            <span class="msg-erro" style="color:red; font-weight:bold;"></span>
                         </div>
                         <button type="button" onclick="logar()" class="btn btn-primary mt-2">Entrar</button>
                     </form>
@@ -38,10 +38,11 @@ require_once __DIR__ . '/head.php';
     })
     function logar() {
         $.post("logar", $("#form-login").serialize(), function (resultado) {
-            if(resultado == true)
-            window.location.href='/';
+            $(".msg-erro").html('');
+            if(resultado.success == true)
+                window.location.href='/';
             else
-                $(".msg-erro").show();
+                $(".msg-erro").html(resultado.msg);
 
         });
     }

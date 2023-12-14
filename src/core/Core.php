@@ -26,9 +26,7 @@ class Core
                 require_once __DIR__ . "/../controllers/$currentController.php";
 
                 $newController = new $currentController();
-                $newController->$action(
-                    
-                );
+                $newController->$action($matches[0]??'');
             }
         }
 

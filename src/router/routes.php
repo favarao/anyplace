@@ -8,6 +8,7 @@ $routes = [
     '/alterarSenhaInicial' => 'UsuarioController@alterarSenhaInicial',
     '/logout' => 'LoginController@logout',
     '/clientes' => 'ClienteController@index',
+    '/cliente/{id}' => 'ClienteController@buscaCliente',
     '/addcliente' => 'ClienteController@adicionarClienteFormulario',
     '/insertCliente' => 'ClienteController@adicionarCliente',
     '/updateCliente' => 'ClienteController@atualizarCliente',

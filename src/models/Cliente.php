@@ -2,6 +2,7 @@
 class Cliente extends Database{
     public $id;
     public $nome;
+    public $loja;
     public $cnpj;
     public $email;
     public $telefone;
@@ -15,6 +16,7 @@ class Cliente extends Database{
     public function __construct($data){
         $this->id = $data["id"]??0;
         $this->nome = $data["nome"]??'';
+        $this->loja = $data["loja"]??'';
         $this->cnpj = $data["cnpj"]??'';
         $this->email = $data["email"]??'';
         $this->telefone = $data["telefone"]??'';
@@ -57,7 +59,7 @@ class Cliente extends Database{
     public function insert(){
         try{
             $pdo = self::getConnection();
-            $stm = $pdo->query("INSERT INTO pessoa (nome,cnpj,email,telefone,celular,contato,endereco,status)
+            $stm = $pdo->query("INSERT INTO pessoa (nome,loja,cnpj,email,telefone,celular,contato,endereco,status)
             VALUES(
                 '$this->nome',
                 '$this->loja',
@@ -78,9 +80,11 @@ class Cliente extends Database{
     }
     public function update(){
         try{
+            print_r($this);
             $pdo = self::getConnection();
             $stm = $pdo->query("UPDATE pessoa SET
             nome = '$this->nome',
+            loja = '$this->loja',
             cnpj = '$this->cnpj',
             email = '$this->email',
             telefone = '$this->telefone',

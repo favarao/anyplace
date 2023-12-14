@@ -11297,6 +11297,11 @@ body {
 .actions{
   gap:10px;
   display:flex;
+  justify-content: space-evenly;
+}
+
+.actions a{
+  cursor:pointer;
 }
 
 .add-button {
@@ -11353,4 +11358,17 @@ span.campo-obrigatorio {
 .msg-erro{
   color:red;
   font-weight:bold;
+}
+
+.actions button {
+  border: none;
+  background: transparent;
+  color: dodgerblue;
+}
+
+button.close{
+  background:red;
+  border-radius: 5px;
+  color: white;
+  border:none;
 }
