@@ -13,6 +13,12 @@ $routes = [
     '/insertCliente' => 'ClienteController@adicionarCliente',
     '/updateCliente' => 'ClienteController@atualizarCliente',
     '/deleteCliente/{id}' => 'ClienteController@deletarCliente',
+    '/produtos' => 'ProdutoController@index',
+    '/produto/{id}' => 'ProdutoController@buscaProduto',
+    '/addproduto' => 'ProdutoController@adicionarProdutoFormulario',
+    '/insertProduto' => 'ProdutoController@adicionarProduto',
+    '/updateProduto' => 'ProdutoController@atualizarProduto',
+    '/deleteProduto/{id}' => 'ProdutoController@deletarProduto',
     '/configuracao' => 'ConfiguracaoController@index',
     '/attParam' => 'ConfiguracaoController@atualizarParametro'
 ];

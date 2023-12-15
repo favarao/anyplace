@@ -42,8 +42,7 @@
                         </form>
                     <?php else: ?>
                         <div class="text-center">
-                            <p style="font-size:50px;" class="bem-vindo"><?=$param->nomeSistema??''?></p>
-                            <?=print_r($_SESSION)?>
+                        <img class="logo-preview" style="width:200px;" src="<?=file_exists("assets/img/logo.png")?'assets/img/logo.png':''?>">
                         </div>
                     <?php endif; ?>
 

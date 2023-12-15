@@ -6,6 +6,7 @@ class ProdutoController extends RenderView{
         [
             'titulo' => 'Lista de Produtos',
             'param' => Configuracao::getConfiguracao(),
+            'produtos' => Produto::getProdutos(),
             'clientes' => Cliente::getClientes()
         ]);
     }
@@ -14,36 +15,70 @@ class ProdutoController extends RenderView{
         $this->loadView('addproduto',
         [
             'titulo' => 'Adicionar Produto',
-            'param' => Configuracao::getConfiguracao()
+            'param' => Configuracao::getConfiguracao(),
+            'clientes' => Cliente::getClientes()
         ]);
     }
 
     public function buscaProduto($id){
         header('Content-Type: application/json');
-        echo json_encode(Cliente::getCliente($id));
+        echo json_encode(Produto::getProduto($id));
     }
+
 
     public function atualizarProduto(){
         header('Content-Type: application/json');
-        $cliente = new Cliente($_REQUEST);
-        if($cliente->update())
-            echo json_encode(['success' => true, 'msg' => 'Cliente atualizado com sucesso']);
+        $produto = new Produto($_REQUEST);
+        if($produto->update())
+            echo json_encode(['success' => true, 'msg' => 'Produto atualizado com sucesso']);
         else
             echo json_encode(['success' => false, 'msg' => 'Erro ao atualizar cliente']);
     }
 
-    public function buscaLoginCliente($idCliente){
-        
+
+    public function adicionarProduto(){
+        header('Content-Type: application/json');
+        $produto = new Produto($_REQUEST);
+        if($_FILES["imagem1"]["name"]!='' || $_FILES["imagem2"]["name"]!='' || $_FILES["imagem3"]["name"]!='')
+        {
+            $nome_temporario1 = $_FILES["imagem1"]["tmp_name"];
+            $nome_arquivo1 = $_FILES["imagem1"]["name"]??'';
+            $nome_temporario2 = $_FILES["imagem2"]["tmp_name"];
+            $nome_arquivo2 = $_FILES["imagem2"]["name"]??'';
+            $nome_temporario3 = $_FILES["imagem3"]["tmp_name"];
+            $nome_arquivo3 = $_FILES["imagem3"]["name"]??'';
+
+        }
+        if($id = $produto->insert())
+        {
+            if(Produto::insertFotos($id,$nome_arquivo1,$nome_arquivo2,$nome_arquivo3))
+            {
+                $diretorio = "assets/img/produto/$id";
+                if (!file_exists($diretorio)) 
+                    mkdir($diretorio, 0777, true);
+                if($nome_arquivo1)
+                    move_uploaded_file($nome_temporario1, "assets/img/produto/$id/$nome_arquivo1");
+                if($nome_arquivo2)
+                    move_uploaded_file($nome_temporario2, "assets/img/produto/$id/$nome_arquivo2");
+                if($nome_arquivo3)
+                    move_uploaded_file($nome_temporario3, "assets/img/produto/$id/$nome_arquivo3");
+            }
+            echo json_encode(['success' => true, 'msg' => 'Produto adicionado com sucesso.']);
+        }
+        else
+            echo json_encode(['success'=> false,'msg'=> 'Erro ao salvar Produto.']);
     }
 
-    public function adicionarCliente(){
+    public function deletarProduto($id){
         header('Content-Type: application/json');
-        $cliente = new Cliente($_REQUEST);
-        if($cliente->insert())
-            
-            echo json_encode(['success' => true, 'msg' => 'Cliente adicionado com sucesso.']);
-        else
-            echo json_encode(['success'=> false,'msg'=> 'Erro ao salvar cliente.']);
+        $produto = Produto::getProduto($id);
+        if($produto)
+            if($produto->delete())
+            {
+                echo json_encode(['success'=> true, 'msg' => 'Produto deletado com sucesso.']);
+                return true;
+            }
+        echo json_encode(['success'=> false, 'msg' => 'Erro ao deletar produto.']);                
     }
 
     

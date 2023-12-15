@@ -43,5 +43,5 @@ class Core
 
 function allow($grupos){
     $grupos = explode(',',$grupos);
-    return in_array($_SESSION['idGrupo'],$grupos);
+    return in_array($_SESSION['grupo'],$grupos);
 }

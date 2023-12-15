@@ -6,7 +6,7 @@
         </div>
         <div class="card">
             <div class="card-header p-3">
-                <a href="cliente-adicionar.php" class="btn btn-primary">Adicionar</a>
+                <a href="/addcliente" class="btn btn-primary">Adicionar</a>
             </div>
             <div class="card-body">
                 <?php if (!empty($clientes)): ?>
@@ -25,10 +25,18 @@
                                 <?php if ($clientes)
                                     foreach ($clientes as $cliente): ?>
                                         <tr>
-                                            <td><?= $cliente->nome ?? '' ?></td>
-                                            <td><?= $cliente->loja ?? '' ?></td>
-                                            <td><?= ($cliente->celular ? $cliente->celular : $cliente->telefone) ?? '' ?></td>
-                                            <td><?= $cliente->email ?? '' ?></td>
+                                            <td>
+                                                <?= $cliente->nome ?? '' ?>
+                                            </td>
+                                            <td>
+                                                <?= $cliente->loja ?? '' ?>
+                                            </td>
+                                            <td>
+                                                <?= ($cliente->celular ? $cliente->celular : $cliente->telefone) ?? '' ?>
+                                            </td>
+                                            <td>
+                                                <?= $cliente->email ?? '' ?>
+                                            </td>
                                             <td class="actions">
                                                 <a onclick="openModal(<?= $cliente->id ?? 0 ?>)" class="table-link"><i
                                                         class="fa-solid fa-pencil"></i></a>
@@ -132,7 +140,8 @@
                             <div class="col-md-6 p-3">
                                 <div class="form-group">
                                     <label for="">Nome de contato *</label>
-                                    <input type="text" name="contato" id="contato" class="form-control" placeholder="Nome - Cargo" required>
+                                    <input type="text" name="contato" id="contato" class="form-control"
+                                        placeholder="Nome - Cargo" required>
                                 </div>
                             </div>
                             <div class="col-md-6 p-3">
@@ -160,27 +169,27 @@
     </div>
 
     <script>
-         $('#cnpj').mask('00.000.000/0000-00', {reverse: true});
+        $('#cnpj').mask('00.000.000/0000-00', { reverse: true });
 
         // Máscara para telefone
         $('#telefone').mask('(00) 0000-0000');
 
         // Máscara para celular
-        $('#celular').mask('(00) 0000-00009').focusout(function(event) {
-        var target, phone, element;
-        target = (event.currentTarget) ? event.currentTarget : event.srcElement;
-        phone = target.value.replace(/\D/g, '');
-        element = $(target);
-        element.unmask();
-        if (phone.length > 10) {
-            element.mask('(00) 00000-0009');
-        } else {
-            element.mask('(00) 0000-00009');
-        }
+        $('#celular').mask('(00) 0000-00009').focusout(function (event) {
+            var target, phone, element;
+            target = (event.currentTarget) ? event.currentTarget : event.srcElement;
+            phone = target.value.replace(/\D/g, '');
+            element = $(target);
+            element.unmask();
+            if (phone.length > 10) {
+                element.mask('(00) 00000-0009');
+            } else {
+                element.mask('(00) 0000-00009');
+            }
         });
 
         function openModal(id) {
-            $.post('/cliente/'+id,function(data){
+            $.post('/cliente/' + id, function (data) {
                 $("#id").val(data.id);
                 $("#nome").val(data.nome);
                 $("#loja").val(data.loja);
@@ -202,15 +211,28 @@
             $("#editarCliente").toggle();
         }
 
-        $("#formulario").submit(function(e){
+        $("#formulario").submit(function (e) {
             e.preventDefault();
-            $.post('/updateCliente',$("#formulario").serialize(),function(data){
-                console.log(data);
+            $.post('/updateCliente', $("#formulario").serialize(), function (data) {
+                if (data.success == true) {
+                    Swal.fire({
+                        title: 'Sucesso!',
+                        text: data.msg,
+                        icon: 'success',
+                    });
+                    closeModal();
+                }
+                else {
+                    Swal.fire({
+                        title: 'Erro!',
+                        text: data.msg,
+                        icon: 'error',
+                    });
+                }
             });
         })
 
         function deletar(id) {
-            // Utilizando SweetAlert2 para confirmar a exclusão
             Swal.fire({
                 title: 'Tem certeza?',
                 text: 'Esta ação não pode ser revertida!',
@@ -222,13 +244,24 @@
                 cancelButtonText: 'Cancelar'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // Aqui você pode adicionar a lógica para excluir o item
-                    Swal.fire(
-                        'Deletado!',
-                        'Seu item foi deletado.',
-                        'success'
-                    );
-                    // Adicione aqui a chamada da função de exclusão ou redirecione para a página de exclusão
+                    $.post("/deleteCliente/" + id, function (data) {
+                        if (data.success == true) {
+                            Swal.fire({
+                                title: 'Sucesso!',
+                                text: data.msg,
+                                icon: 'success',
+                            }).then((result) => {
+                if (result.isConfirmed) {location.reload()}})
+                        }
+                        else {
+                            Swal.fire({
+                                title: 'Erro!',
+                                text: data.msg,
+                                icon: 'error',
+                            }).then((result) => {
+                if (result.isConfirmed) {location.reload()}})
+                        }
+                    });
                 }
             });
         }

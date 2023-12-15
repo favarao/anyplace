@@ -6,6 +6,7 @@
                             <a class="nav-link" href="/">
                                 Home
                             </a>
+                            <?php if(allow('1')):?>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseClientes" aria-expanded="false" aria-controls="collapseLayouts">
                                 Clientes <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>                                
                             </a>
@@ -13,14 +14,19 @@
                                     <a class="nav-link" href="/clientes">Clientes</a>
                                     <a class="nav-link" href="/addcliente">Cliente Adicionar</a>
                             </div>
+                            <?php endif;?>
+                            <?php if(allow('1,2')):?>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseProdutos" aria-expanded="false" aria-controls="collapsePages">
                                 Produtos <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse link-group" id="collapseProdutos" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                                 <a class="nav-link no-border" href="/produtos">Produtos</a>
-                                <a class="nav-link" href="/addprodutos">Produto Adicionar</a>
+                                <?php if(allow('1')):?>
+                                <a class="nav-link" href="/addproduto">Produto Adicionar</a>
+                                <?php endif;?>
                             </div>
-
+                            <?php endif;?>
+                            <?php if(allow('1')):?>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseVendas" aria-expanded="false" aria-controls="collapsePages">
                                 Vendas <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
@@ -59,6 +65,7 @@
                             <div class="collapse link-group" id="collapseConfiguracoes" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                                 <a class="nav-link no-border" href="/configuracao">Parametrização</a>
                             </div>
+                        <?php endif;?>
                         </div>
                     </div>
                 </nav>

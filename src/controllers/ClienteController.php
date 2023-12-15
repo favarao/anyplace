@@ -35,7 +35,12 @@ class ClienteController extends RenderView
         // print_r($cliente);print_r($usuario);exit;
         if (!$usuario || $usuario->idCliente == $cliente->id) {
             if ($cliente->update()) {
-                $usuario->update();
+                if(!$usuario)
+                {
+                    $usuario = self::buscaLoginCliente('',$cliente->id);
+                    $usuario->login = $cliente->login;
+                    $usuario->update();
+                }
                 echo json_encode(['success' => true, 'msg' => 'Cliente atualizado com sucesso']);
             } else
                 echo json_encode(['success' => false, 'msg' => 'Erro ao atualizar cliente']);
@@ -70,6 +75,18 @@ class ClienteController extends RenderView
                 echo json_encode(['success' => true, 'msg' => 'Cliente adicionado com sucesso.']);
             } else
                 echo json_encode(['success' => false, 'msg' => 'Erro ao salvar cliente.']);
+    }
+
+    public function deletarCliente($id){
+        header('Content-Type: application/json');
+        $cliente = Cliente::getCliente($id);
+        if($cliente)
+            if($cliente->delete())
+            {
+                echo json_encode(['success'=> true, 'msg' => 'Cliente deletado com sucesso.']);
+                return true;
+            }
+        echo json_encode(['success'=> false, 'msg' => 'Erro ao deletar cliente.']);                
     }
 
 

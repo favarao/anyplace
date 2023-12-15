@@ -5,46 +5,36 @@ class ConfiguracaoController extends RenderView{
         $this->loadView('configuracao',
     [
         'titulo'=> 'Atualizar Parametros',
-        'param' => Configuracao::getConfiguracao()
+        'param' => Configuracao::getConfiguracao(),
+        'msg' => $_REQUEST['msg']??''
     ]);
     }
 
     public function atualizarParametro(){
+        header('Content-Type: application/json');
         $msg ='';
-        if (isset($_FILES["logo"]) && $_FILES["logo"]["error"] == 0) {
+        if (isset($_FILES["logo"]["name"]) && $_FILES["logo"]["name"]!='') {
             $nome_temporario = $_FILES["logo"]["tmp_name"];
             $nome_arquivo = $_FILES["logo"]["name"];
-            $formato = explode('.',$nome_arquivo)[1];
+            
+            $formato = explode('.',$nome_arquivo);
+            $formato = $formato[count($formato)-1];
             if($formato!='png' && $formato!= 'jpg' && $formato!= 'jpeg'){
                 $msg = "Erro em salvar imagem. Precisa ser png ou jpg.";
+                echo json_encode(['success' => false, 'msg'=> $msg]);
             }
         }
-        elseif(isset($_FILES['logo']))
-        {
-            $msg = "Erro em salvar imagem.";
-        }elseif(!isset($_REQUEST['nomeSistema']) || !isset($_REQUEST['nomeAdministrador']))
-        {
-            $msg = "Preencha corretamente o formulário";
-        }
-
         if($msg=='')
         {
-            if(isset($_FILES["logo"]))
-                $_REQUEST['logo'] = "logo.$formato";
             $configuracao = new Configuracao($_REQUEST);
-            if($configuracao->update())
-            {
-                if(isset($_FILES["logo"]))
-                move_uploaded_file($nome_temporario, "assets/img/logo.$formato");
-                $msg = "Parametros atualizados com sucesso.";
-            }
-            else
-            {
-                $msg = "Erro ao salvar parametros";
-            }
+                if($configuracao->update())
+                {
+                    if(isset($_FILES["logo"]['name']) && $_FILES["logo"]["name"]!='')
+                        move_uploaded_file($nome_temporario, "assets/img/logo.$formato");
+                    $msg = "Parametros atualizados com sucesso.";
+                    echo json_encode(['success' => true, 'msg'=> $msg]);
+                }
         }
 
-        header("Location: /configuracao" );
-        exit;
     }
 }

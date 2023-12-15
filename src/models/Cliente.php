@@ -46,9 +46,10 @@ class Cliente extends Database{
         try{
             $pdo = self::getConnection();
             $stm = $pdo->query("SELECT p.*, u.login FROM pessoa p left join usuario u on u.idCliente = p.id where p.id = '$id'");
-            if($stm)
-            return new Cliente($stm->fetch(PDO::FETCH_ASSOC));
-            return false;
+            $rs = $stm->fetch(PDO::FETCH_ASSOC);
+            if($rs)
+            return new Cliente($rs);
+                return false;
         }catch(PDOException $e){
             throw new Exception(print_r($e->errorInfo));
         }
@@ -105,10 +106,10 @@ class Cliente extends Database{
         }
     }
 
-    public static function delete($id){
+    public function delete(){
         try{
             $pdo = self::getConnection();
-            $stm = $pdo->query("UPDATE cliente set status = '999' where id = '$id'");
+            $stm = $pdo->query("UPDATE pessoa set status = '999' where id = '$this->id'");
             if($stm)
                 return true;
             return false;

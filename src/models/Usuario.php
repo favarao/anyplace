@@ -25,26 +25,28 @@ class Usuario extends Database
         try {
             $pdo = self::getConnection();
             $stm = $pdo->query("SELECT u.*, p.nome FROM usuario u LEFT JOIN pessoa p on p.id = u.idCliente WHERE u.login = '$usuario' AND u.senha = '$senha'");
-            if ($stm->fetch(PDO::FETCH_ASSOC))
-                return new Usuario($stm->fetch(PDO::FETCH_ASSOC));
+            $resultado = $stm->fetch(PDO::FETCH_ASSOC);
+            if ($resultado)
+                return new Usuario($resultado);
             return false;
         } catch (PDOException $e) {
             throw new Exception(print_r($e->errorInfo));
         }
     }
 
-    public static function getUsuarioByLogin($login = '', $idCliente ='')
+    public static function getUsuarioByLogin($login = '', $idCliente = '')
     {
         try {
             $pdo = self::getConnection();
             $sql = "SELECT u.*, p.nome from usuario u left join pessoa p on p.id = u.idCliente";
-            if($login)
-            $sql .= " where login like '$login'"; 
-            elseif($idCliente)
-            $sql .= " where idCliente ='$idCliente'";
+            if ($login)
+                $sql .= " where login like '$login'";
+            elseif ($idCliente)
+                $sql .= " where idCliente ='$idCliente'";
             $stm = $pdo->query($sql);
-            if ($stm)
-                return new Usuario($stm->fetch(PDO::FETCH_ASSOC));
+            $rs = $stm->fetch(PDO::FETCH_ASSOC);
+            if ($rs)
+                return new Usuario($rs);
             return false;
         } catch (PDOException $e) {
             throw new Exception(print_r($e->errorInfo));
@@ -84,7 +86,7 @@ class Usuario extends Database
             status = '$this->status'
             WHERE id = '$this->id'
             ");
-            if ($stm)
+            if($stm)
                 return true;
             return false;
         } catch (PDOException $e) {
