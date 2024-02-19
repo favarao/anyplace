@@ -219,7 +219,9 @@
                         title: 'Sucesso!',
                         text: data.msg,
                         icon: 'success',
-                    });
+                    }).then((result) => {
+                                if (result.isConfirmed) { location.reload() }
+                            });
                     closeModal();
                 }
                 else {

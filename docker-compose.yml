@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8080:80"
+      - "80:80"
     volumes:
       - ./src:/var/www/html
       - ./config/php.ini:/usr/local/etc/php/conf.d/php.ini
@@ -21,7 +21,7 @@ services:
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     ports:
-      - "8081:80"
+      - "8080:80"
     environment:
       PMA_HOST: mysql
       MYSQL_ROOT_PASSWORD: root

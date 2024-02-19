@@ -45,3 +45,11 @@ function allow($grupos){
     $grupos = explode(',',$grupos);
     return in_array($_SESSION['grupo'],$grupos);
 }
+
+function idUsuario(){
+    $usuario = new stdClass();
+    $usuario->idUsuario = $_SESSION['idUsuario'];
+    $usuario->nome = $_SESSION['nome'];
+
+    return $usuario;
+}
