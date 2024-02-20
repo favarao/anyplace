@@ -19,6 +19,7 @@ $routes = [
     '/insertProduto' => 'ProdutoController@adicionarProduto',
     '/updateProduto' => 'ProdutoController@atualizarProduto',
     '/deleteProduto/{id}' => 'ProdutoController@deletarProduto',
+    '/importProdutos' => 'ProdutoController@importarCSV',
     '/configuracao' => 'ConfiguracaoController@index',
     '/attParam' => 'ConfiguracaoController@atualizarParametro'
 ];

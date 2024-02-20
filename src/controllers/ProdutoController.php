@@ -81,5 +81,41 @@ class ProdutoController extends RenderView{
         echo json_encode(['success'=> false, 'msg' => 'Erro ao deletar produto.']);                
     }
 
+    public function importarCSV(){
+        header('Content-Type: application/json');
+        $file = $_FILES['arquivoCSV']??'';
+        if ($file) {
+            $csvData = file_get_contents($file['tmp_name']);
+        $lines = explode(PHP_EOL, $csvData);
+        $result = array();
+
+        // Assume que a primeira linha contém os cabeçalhos
+        $headers = str_getcsv(array_shift($lines),'¨');
+
+        foreach ($lines as $line) {
+            $rowData = str_getcsv($line,"¨");
+            print_r($rowData);exit;
+
+            // Verifique se o número de elementos é o mesmo nos cabeçalhos e nos valores
+            if (count($headers) === count($rowData)) {
+                // Crie um array associativo combinando cabeçalhos e valores
+                $assocData = array_combine($headers, $rowData);
+
+                // Adicione ao resultado
+                $result[] = $assocData;
+            } else {
+                // Trate a situação em que o número de elementos não corresponde
+                echo "Erro: O número de elementos nos cabeçalhos não corresponde ao número de elementos na linha.";
+                exit;
+            }
+        }
+    
+            // Agora $result contém um array de arrays associativos, onde cada array representa uma linha do CSV.
+    
+            // Faça o que quiser com $result, por exemplo, converta para JSON e imprima:
+            echo json_encode($result);
+        }
+    }
+
     
 }
