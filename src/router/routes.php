@@ -15,11 +15,23 @@ $routes = [
     '/deleteCliente/{id}' => 'ClienteController@deletarCliente',
     '/produtos' => 'ProdutoController@index',
     '/produto/{id}' => 'ProdutoController@buscaProduto',
+    '/getProdutos/{id}' => 'ProdutoController@getProdutos',
     '/addproduto' => 'ProdutoController@adicionarProdutoFormulario',
     '/insertProduto' => 'ProdutoController@adicionarProduto',
     '/updateProduto' => 'ProdutoController@atualizarProduto',
     '/deleteProduto/{id}' => 'ProdutoController@deletarProduto',
     '/importProdutos' => 'ProdutoController@importarCSV',
     '/configuracao' => 'ConfiguracaoController@index',
-    '/attParam' => 'ConfiguracaoController@atualizarParametro'
+    '/solicitarComissao' => 'ConfiguracaoController@solicitarComissao',
+    '/recusarNegociacao' => 'ConfiguracaoController@recusarNegociacao',
+    '/aceitarComissao' => 'ConfiguracaoController@aceitarComissao',
+    '/negociarComissao' => 'ConfiguracaoController@negociarComissao',
+    '/buscaNegociacao/{id}' => 'ConfiguracaoController@buscaNegociacao',
+    '/atualizaComissao' => 'ConfiguracaoController@atualizaComissao',
+    '/attParam' => 'ConfiguracaoController@atualizarParametro',
+
+    '/promocoes' => 'PromocaoController@index',
+    '/gerenciarPromocao/{id}' => 'PromocaoController@gerenciarPromocoes',
+    '/gerenciarPromocao' => 'PromocaoController@gerenciarPromocoes',
+
 ];

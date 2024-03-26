@@ -130,8 +130,9 @@
                                 <div class="form-group">
                                     <label for="">Categoria *</label>
                                     <select name="idCategoria" id="idCategoria" class="form-control" required>
-                                        <option value="1">Categoria 1</option>
-                                        <option value="2">Categoria 2</option>
+                                    <?php foreach($categorias as $c):?>
+                                            <option value="<?=$c->id?>"><?=$c->nome?></option>
+                                        <?php endforeach;?>
                                     </select>
                                 </div>
                             </div>
@@ -263,9 +264,11 @@
 
     <script>
         $('#valor').mask('0.000.000.000,00', {reverse: true});
+        
         // $(".valor").maskMoney({prefix:'R$ ', allowNegative: true, thousands:'.', decimal:',', affixesStay: false});
         
-        $(document).ready(function(){})
+        $(document).ready(function(){
+        })
         function openModal(id) {
             $.post('/produto/' + id, function (data) {
                 $("#id").val(data.id);
@@ -312,8 +315,22 @@
                 data: formData,
                 contentType: false,
                 processData: false,
-                success: function (data) {
-                    console.log(data);
+                success: function (data) { 
+                    if(data.resuLt == true)
+                        Swal.fire({
+                            title: 'Sucesso!',
+                            icon: 'success'
+                        });
+                    else
+                        Swal.fire({
+                            title: 'Erro!',
+                            icon: 'error'
+                        });
+                
+
+                },
+                complete: function(data){
+                    location.reload();
                 }
             });
 
@@ -379,6 +396,7 @@
 
 
         $('#tabela-produtos').DataTable({
+            "order": [[1, "asc"]],
             "language": {
                 "decimal": "",
                 "emptyTable": "Nenhum registro encontrado",

@@ -7,7 +7,8 @@ class ProdutoController extends RenderView{
             'titulo' => 'Lista de Produtos',
             'param' => Configuracao::getConfiguracao(),
             'produtos' => Produto::getProdutos(),
-            'clientes' => Cliente::getClientes()
+            'clientes' => Cliente::getClientes(),
+            'categorias' => Produto::getCategorias()
         ]);
     }
 
@@ -16,8 +17,17 @@ class ProdutoController extends RenderView{
         [
             'titulo' => 'Adicionar Produto',
             'param' => Configuracao::getConfiguracao(),
-            'clientes' => Cliente::getClientes()
+            'clientes' => Cliente::getClientes(),
+            'categorias' => Produto::getCategorias()
         ]);
+    }
+
+    public static function getPRodutos($cliente = ''){
+        header('Content-Type: application/json');
+        if($cliente)
+            echo json_encode(Produto::getProdutosByCliente($cliente));
+        else
+            echo json_encode(Produto::getProdutos());            
     }
 
     public function buscaProduto($id){
@@ -85,36 +95,33 @@ class ProdutoController extends RenderView{
         header('Content-Type: application/json');
         $file = $_FILES['arquivoCSV']??'';
         if ($file) {
-            $csvData = file_get_contents($file['tmp_name']);
-        $lines = explode(PHP_EOL, $csvData);
-        $result = array();
+            $file = fopen($file["tmp_name"], "r");
 
-        // Assume que a primeira linha contém os cabeçalhos
-        $headers = str_getcsv(array_shift($lines),'¨');
+        $products = array();
 
-        foreach ($lines as $line) {
-            $rowData = str_getcsv($line,"¨");
-            print_r($rowData);exit;
+        $keys = fgetcsv($file, 0, ",");
 
-            // Verifique se o número de elementos é o mesmo nos cabeçalhos e nos valores
-            if (count($headers) === count($rowData)) {
-                // Crie um array associativo combinando cabeçalhos e valores
-                $assocData = array_combine($headers, $rowData);
+        while (($data = fgetcsv($file, 0, ",")) !== false) {
+            $product = array();
 
-                // Adicione ao resultado
-                $result[] = $assocData;
-            } else {
-                // Trate a situação em que o número de elementos não corresponde
-                echo "Erro: O número de elementos nos cabeçalhos não corresponde ao número de elementos na linha.";
-                exit;
+            foreach ($keys as $keyIndex => $key) {
+                $product[$key] = ($data[$keyIndex]);
             }
+            
+            $product = new Produto($product);
+            $product->idCliente = $_REQUEST["cliente"];
+            $product->idCategoria = 4513;
+            
+            $product->insertOrUpdate();
+
+            $products[] = $product;
         }
-    
-            // Agora $result contém um array de arrays associativos, onde cada array representa uma linha do CSV.
-    
-            // Faça o que quiser com $result, por exemplo, converta para JSON e imprima:
-            echo json_encode($result);
+        echo '{"result":true}';
+        fclose($file);
+
+       
         }
+        
     }
 
     

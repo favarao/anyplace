@@ -270,6 +270,7 @@
 
 
         $('#tabela-clientes').DataTable({
+            "order": [[0, "asc"]],
             "language": {
                 "decimal": "",
                 "emptyTable": "Nenhum registro encontrado",

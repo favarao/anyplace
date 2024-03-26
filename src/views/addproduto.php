@@ -29,7 +29,7 @@
                         <div class="col-md-6 p-3">
                                 <div class="form-group">
                                     <label for="">Valor *</label>
-                                    <input type="text" name="valor" id="valor" class="form-control"
+                                    <input type="text" name="valor" id="valor" min="1" class="form-control"
                                         placeholder="Valor do Produto" required>
                                 </div>
                             </div>
@@ -64,8 +64,9 @@
                                 <div class="form-group">
                                     <label for="">Categoria *</label>
                                     <select name="idCategoria" id="idCategoria" class="form-control" required>
-                                        <option value="1">Categoria 1</option>
-                                        <option value="2">Categoria 2</option>
+                                        <?php foreach($categorias as $c):?>
+                                            <option value="<?=$c->id?>"><?=$c->nome?></option>
+                                        <?php endforeach;?>
                                     </select>
                                 </div>
                             </div>
@@ -134,6 +135,7 @@
         </div>
     </div>
     <script>
+        $("#idCategoria").select2();
         $('#valor').mask('0.000.000.000,00', {reverse: true});
         $("#formulario").submit(function (e) {
             e.preventDefault();

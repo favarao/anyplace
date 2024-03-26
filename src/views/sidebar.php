@@ -21,7 +21,7 @@
                             </a>
                             <div class="collapse link-group" id="collapseProdutos" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                                 <a class="nav-link no-border" href="/produtos">Produtos</a>
-                                <?php if(allow('1')):?>
+                                <?php if(allow('1,2')):?>
                                 <a class="nav-link" href="/addproduto">Produto Adicionar</a>
                                 <?php endif;?>
                             </div>
@@ -39,8 +39,7 @@
                                 Anuncios <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse link-group" id="collapseAnuncios" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
-                                <a class="nav-link no-border" href="index.php">Home</a>
-                                <a class="nav-link" href="gerenciar-promocoes.php">Gerenciar Promoções</a>
+                                <a class="nav-link" href="gerenciarPromocoes">Gerenciar Promoções</a>
                             </div>
 
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseContasReceber" aria-expanded="false" aria-controls="collapsePages">
@@ -59,12 +58,20 @@
                                 <a class="nav-link" href="index.php">Home</a>
                             </div>
 
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseConfiguracoes" aria-expanded="false" aria-controls="collapsePages">
+                           
+                        <?php endif;?>
+                        <?php if(allow('1,2')):?>
+                            <a class="nav-link collapsed" style="<?php if(!empty(Configuracao::alertaNegociacao()) && allow('1')) echo 'background:orange;color:white;'?>" href="#" data-bs-toggle="collapse" data-bs-target="#collapseConfiguracoes" aria-expanded="false" aria-controls="collapsePages">
                                 Configurações <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse link-group" id="collapseConfiguracoes" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                                <a class="nav-link no-border" style="<?php if(!empty(Configuracao::alertaNegociacao()) && allow('1')) echo 'background:orange;color:white;'?>" href="/negociarComissao">Negociar Comissão</a>
+                            </div>
+                            <?php if(allow('1')):?>
+                            <div class="collapse link-group" id="collapseConfiguracoes" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                                 <a class="nav-link no-border" href="/configuracao">Parametrização</a>
                             </div>
+                            <?php endif;?>
                         <?php endif;?>
                         </div>
                     </div>

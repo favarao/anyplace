@@ -31,7 +31,7 @@ class Cliente extends Database{
     public static function getClientes(){
         try{
         $pdo = self::getConnection();
-        $stm = $pdo->query("SELECT p.*, u.login FROM pessoa p left join usuario u on u.idCliente = p.id WHERE p.status!=999");
+        $stm = $pdo->query("SELECT p.*, u.login FROM pessoa p left join usuario u on u.idCliente = p.id WHERE p.status!=999 ORDER BY p.nome ASC");
         $clientes = array();
         while($row = $stm->fetch(PDO::FETCH_ASSOC)){
             $clientes[] = new Cliente($row);
@@ -46,6 +46,19 @@ class Cliente extends Database{
         try{
             $pdo = self::getConnection();
             $stm = $pdo->query("SELECT p.*, u.login FROM pessoa p left join usuario u on u.idCliente = p.id where p.id = '$id'");
+            $rs = $stm->fetch(PDO::FETCH_ASSOC);
+            if($rs)
+            return new Cliente($rs);
+                return false;
+        }catch(PDOException $e){
+            throw new Exception(print_r($e->errorInfo));
+        }
+    }
+
+    public static function getClienteByUsuario($id){
+        try{
+            $pdo = self::getConnection();
+            $stm = $pdo->query("SELECT p.*, u.login FROM pessoa p left join usuario u on u.idCliente = p.id where u.id = '$id'");
             $rs = $stm->fetch(PDO::FETCH_ASSOC);
             if($rs)
             return new Cliente($rs);
