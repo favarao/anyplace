@@ -2,22 +2,39 @@
 
 class ProdutoController extends RenderView{
     public function index(){
+        $clientes = array();
+        if(allow('2'))
+        {
+            $produtos = Produto::getProdutosByCliente($_SESSION['idCliente']);
+            $clientes[] = Cliente::getCliente($_SESSION['idCliente']);
+        }            
+        else
+        {
+            $clientes = Cliente::getClientes();
+            $produtos = Produto::getProdutos();
+        }
+            
         $this->loadView('produtos',
         [
             'titulo' => 'Lista de Produtos',
             'param' => Configuracao::getConfiguracao(),
-            'produtos' => Produto::getProdutos(),
-            'clientes' => Cliente::getClientes(),
+            'produtos' => $produtos,
+            'clientes' => $clientes,
             'categorias' => Produto::getCategorias()
         ]);
     }
 
     public function adicionarProdutoFormulario(){
+        $clientes = array();
+        if(allow('2'))
+            $clientes[] = Cliente::getClienteByUsuario($_SESSION['idUsuario']);
+        else
+            $clientes = Cliente::getClientes();
         $this->loadView('addproduto',
         [
             'titulo' => 'Adicionar Produto',
             'param' => Configuracao::getConfiguracao(),
-            'clientes' => Cliente::getClientes(),
+            'clientes' => $clientes,
             'categorias' => Produto::getCategorias()
         ]);
     }

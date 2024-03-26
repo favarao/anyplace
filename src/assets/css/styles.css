@@ -11372,3 +11372,7 @@ button.close{
   color: white;
   border:none;
 }
+
+.pointer{
+  cursor: pointer !important;
+}

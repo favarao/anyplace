@@ -33,5 +33,7 @@ $routes = [
     '/promocoes' => 'PromocaoController@index',
     '/gerenciarPromocao/{id}' => 'PromocaoController@gerenciarPromocoes',
     '/gerenciarPromocao' => 'PromocaoController@gerenciarPromocoes',
+    '/adicionarPromocao' => 'PromocaoController@adicionarPromocao',
+    '/deletePromocao/{id}' => 'PromocaoController@deletePromocao',
 
 ];

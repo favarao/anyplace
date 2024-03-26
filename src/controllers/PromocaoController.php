@@ -4,111 +4,80 @@ class PromocaoController extends RenderView
 {
     public function index()
     {
-        $clientes = array();
+        $promocoes = array();
         if(allow('2'))
         {
-            $clientes[] = Cliente::getCliente($_SESSION['idUsuario']);
-            $idCliente =  $_SESSION['idUsuario'];  
+            $idCliente =  $_SESSION['idCliente'];
+            $promocoes = Promocao::getPromocoes($idCliente);
+            
         }            
         else
-            $clientes = Cliente::getClientes();
+            $promocoes = Promocao::getPromocoes();
 
         $this->loadView('promocoes',
             [
                 'titulo' => 'Lista de Promoções',
-                'promocoes' => Promocao::getPromocoes($idCliente??''),
-                'clientes' => $clientes
+                'param' => Configuracao::getConfiguracao(),
+                'promocoes' => $promocoes
             ]);
     }
 
+    public function adicionarPromocao(){
+        header('Content-Type: application/json');
+        $promocao = new Promocao($_REQUEST);
+        $promocao = Promocao::getPromocao($promocao->save());
+        $promocao->salvaProdutos($_REQUEST['produtos']);
+        $data = ['result'=> true, 'msg'=>'Promoção salva com sucesso.'];
+        echo json_encode($data);
+    }
+    public function deletePromocao($id){
+        header('Content-Type: application/json');
+        
+        return Promocao::getPromocao($id)->delete();
+    }
     public function gerenciarPromocoes($idPromocao='')
     {
         $clientes = array();
-        if(allow('1'))
-            $clientes = Cliente::getClientes();
-        else
-            $clientes = Cliente::getCliente($_SESSION['usuario_id']);
-        if($idPromocao)
-            $promocao = Promocao::getPromocao($idPromocao);
-        else
-            $promocao = new Promocao();
 
-        $this->loadView('gerenciarPromocoes',
+        if(allow('2'))
+            $clientes[0] = Cliente::getClienteByUsuario($_SESSION['idUsuario']);
+        else
+            $clientes = Cliente::getClientes();
+        if($idPromocao)
+        {
+            $promocao = Promocao::getPromocao($idPromocao);
+            if($promocao)
+                $listaProdutos = $promocao->getProdutos();
+            else
+                $listaProdutos = array();
+            $produtos = array();
+            if($listaProdutos)
+            foreach($listaProdutos as $lp)
+                array_push($produtos,$lp->id);
+            $produtos = implode(',',$produtos);
+        }
+        else
+        {
+            $promocao = new Promocao();
+            $produtos = '';
+            $listaProdutos = array();
+        }
+            
+
+        
+
+        $this->loadView('gerenciarPromocao',
             [
                 'titulo' => 'Gerenciar Promoções',
+                'clientes' => $clientes,
                 'param' => Configuracao::getConfiguracao(),
                 'promocao' => $promocao,
-                'clientes' => Cliente::getClientes()
+                'listaProdutos' => $listaProdutos,
+                'produtos' => $produtos
             ]);
     }
 
-    public function buscaPromocao($id)
-    {
-        header('Content-Type: application/json');
-        echo json_encode(Promocao::getPromocao($id));
-    }
-
-    public function atualizarCliente()
-    {
-        header('Content-Type: application/json');
-        $cliente = new Cliente($_REQUEST);
-        $usuario = self::buscaLoginCliente($cliente->login);
-        // print_r($cliente);print_r($usuario);exit;
-        if (!$usuario || $usuario->idCliente == $cliente->id) {
-            if ($cliente->update()) {
-                if(!$usuario)
-                {
-                    $usuario = self::buscaLoginCliente('',$cliente->id);
-                    $usuario->login = $cliente->login;
-                    $usuario->update();
-                }
-                echo json_encode(['success' => true, 'msg' => 'Cliente atualizado com sucesso']);
-            } else
-                echo json_encode(['success' => false, 'msg' => 'Erro ao atualizar cliente']);
-        } else {
-            echo json_encode(['success' => false, 'msg' => 'Login já cadastrado']);
-        }
-    }
-
-    public function buscaLoginCliente($login = '', $idCliente = '')
-    {
-        return Usuario::getUsuarioByLogin($login, $idCliente);
-    }
-
-
-
-    public function adicionarCliente()
-    {
-        header('Content-Type: application/json');
-        $cliente = new Cliente($_REQUEST);
-        $usuario = self::buscaLoginCliente($cliente->login);
-
-        if ($usuario)
-            echo json_encode(['success' => false, "msg" => 'Login já cadastrado.']);
-        else
-            if ($id = $cliente->insert()) {
-                $cliente = (array) $cliente;
-                $cliente['idCliente'] = $id;
-                $cliente['grupo'] = 2;
-                $cliente['status'] = 1;
-                $usuario = new Usuario($cliente);
-                $usuario->insert();
-                echo json_encode(['success' => true, 'msg' => 'Cliente adicionado com sucesso.']);
-            } else
-                echo json_encode(['success' => false, 'msg' => 'Erro ao salvar cliente.']);
-    }
-
-    public function deletarCliente($id){
-        header('Content-Type: application/json');
-        $cliente = Cliente::getCliente($id);
-        if($cliente)
-            if($cliente->delete())
-            {
-                echo json_encode(['success'=> true, 'msg' => 'Cliente deletado com sucesso.']);
-                return true;
-            }
-        echo json_encode(['success'=> false, 'msg' => 'Erro ao deletar cliente.']);                
-    }
+   
 
 
 }

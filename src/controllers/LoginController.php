@@ -22,6 +22,7 @@ class LoginController extends RenderView
             else
             {
                 $_SESSION['idUsuario'] = $usuario->id;
+                $_SESSION['idCliente'] = $usuario->idCliente;
                 $_SESSION['nome'] = $usuario->nome??'';
                 $_SESSION['grupo'] = $usuario->grupo;
                 

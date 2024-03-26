@@ -9,7 +9,7 @@
                 <a href="/gerenciarPromocao" class="btn btn-primary">Adicionar</a>
             </div>
             <div class="card-body">
-                <?php if (!empty($clientes)): ?>
+                <?php if (!empty($promocoes)): ?>
                     <div class="table-responsive">
                         <table id="tabela-promocoes">
                             <thead>
@@ -36,10 +36,11 @@
                                                 <?=$promocao->dataInicial??''?>
                                             </td>
                                             <td>
-                                                <?= $promocao->datafinal ?? '' ?>
+                                                <?= $promocao->dataFinal ?? '' ?>
                                             </td>
+                                            <td><?=$promocao->valor??''?></td>
                                             <td class="actions">
-                                                <a href="/gerenciarPromocao/<?-$promocao->id?>" class="table-link"><i
+                                                <a href="/gerenciarPromocao/<?=$promocao->id?>" class="table-link"><i
                                                         class="fa-solid fa-pencil"></i></a>
                                                 <a onclick="deletar(<?= $promocao->id ?? 0 ?>)" class="table-link text-danger"><i
                                                         class="fa-solid fa-trash"></i></a>
@@ -52,7 +53,7 @@
                         </table>
                     </div>
                 <?php else: ?>
-                    <span>Nenhum cliente cadastrado.</span>
+                    <span>Nenhuma promoção cadastrado.</span>
                 <?php endif; ?>
             </div>
         </div>
@@ -95,22 +96,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.post("/deletePromocao/" + id, function (data) {
-                        if (data.success == true) {
-                            Swal.fire({
-                                title: 'Sucesso!',
-                                text: data.msg,
-                                icon: 'success',
-                            }).then((result) => {
-                if (result.isConfirmed) {location.reload()}})
-                        }
-                        else {
-                            Swal.fire({
-                                title: 'Erro!',
-                                text: data.msg,
-                                icon: 'error',
-                            }).then((result) => {
-                if (result.isConfirmed) {location.reload()}})
-                        }
+                        location.reload();
                     });
                 }
             });

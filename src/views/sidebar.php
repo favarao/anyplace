@@ -26,7 +26,7 @@
                                 <?php endif;?>
                             </div>
                             <?php endif;?>
-                            <?php if(allow('1')):?>
+                            <?php if(allow('1,2')):?>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseVendas" aria-expanded="false" aria-controls="collapsePages">
                                 Vendas <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
@@ -39,7 +39,7 @@
                                 Anuncios <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse link-group" id="collapseAnuncios" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
-                                <a class="nav-link" href="gerenciarPromocoes">Gerenciar Promoções</a>
+                                <a class="nav-link" href="promocoes">Gerenciar Promoções</a>
                             </div>
 
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseContasReceber" aria-expanded="false" aria-controls="collapsePages">

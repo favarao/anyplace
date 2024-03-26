@@ -7,6 +7,7 @@ class Produto extends Database
     public $idCategoria;
     public $idMarca;
     public $nome;
+    public $loja;
     public $sku;
     public $valor;
     public $estoque;
@@ -42,9 +43,10 @@ class Produto extends Database
         try{
         $pdo = self::getConnection();
         $idUsuario = $_SESSION['idUsuario'];
-        $sql = "SELECT pr.*, p.loja, p.nome as nomeCliente FROM produto pr inner join pessoa p on p.id = pr.idCliente WHERE p.status!=999 AND pr.status!=999 ORDER BY pr.nome ASC";
+        $sql = "SELECT pr.*, p.loja, p.nome as nomeCliente FROM produto pr inner join pessoa p on p.id = pr.idCliente WHERE p.status!=999 AND pr.status!=999";
         if($_SESSION['grupo'] == 2)
         $sql.=" AND pr.idCliente='$idUsuario'";
+        $sql.= " ORDER BY pr.nome ASC";
         $stm = $pdo->query($sql);
         $produtos = array();
         while($row = $stm->fetch(PDO::FETCH_ASSOC)){
